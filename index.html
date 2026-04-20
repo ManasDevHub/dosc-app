@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="DOSC">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F0F2F6">
+<meta name="description" content="Dubai Offshore Sailing Club — Member Portal">
+<title>DOSC Member App</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- SPLASH -->
+  <div id="screen-splash" class="screen">
+    <div class="splash-logo-ring"><div class="splash-logo-inner">⚓</div></div>
+    <div class="splash-title">DOSC</div>
+    <div class="splash-sub">Dubai Offshore Sailing Club</div>
+    <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+  </div>
+
+  <!-- LOGIN -->
+  <div id="screen-login" class="screen">
+    <div class="login-hero">
+      <div class="login-hero-icon">🛥️</div>
+      <div class="login-hero-text">Member Portal</div>
+    </div>
+    <div class="login-body">
+      <h2 class="login-greeting">Welcome Back</h2>
+      <p class="login-sub">Sign in to your DOSC membership account</p>
+      <div class="form-group">
+        <label class="form-label" for="login-email">Email Address</label>
+        <input class="form-input" id="login-email" type="email" placeholder="james.hartwell@email.com" value="james.hartwell@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="login-pass">Password</label>
+        <input class="form-input" id="login-pass" type="password" placeholder="••••••••" value="password">
+      </div>
+      <div style="text-align:right;margin-bottom:24px"><button style="background:none;border:none;color:var(--brand-blue);font-size:13px;font-weight:600;cursor:pointer;">Forgot password?</button></div>
+      <button class="btn-primary" onclick="loginSubmit()">Sign In to DOSC</button>
+      <div class="login-divider">or</div>
+      <button class="btn-biometric" onclick="biometricLogin()">
+        <svg style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9v2c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V9c0-3.87-3.13-7-7-7z"/><path d="M12 13v9M9 19h6M7 9c0 2.76 2.24 5 5 5s5-2.24 5-5"/></svg>
+        Sign in with Biometrics
+      </button>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div id="screen-home" class="screen">
+    <div class="status-bar transparent">
+      <span class="time">09:41</span>
+      <div class="nav-logo" style="font-weight:800;color:var(--brand-blue);font-size:16px;">DOSC</div>
+      <div class="status-icons">
+        <svg width="18" height="12" viewBox="0 0 16 12" fill="var(--text-primary)"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1"/><rect x="9" y="0.5" width="3" height="11.5" rx="1"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" opacity="0.3"/></svg>
+        <div class="battery-icon"><div class="battery-fill"></div></div>
+      </div>
+    </div>
+    <div class="scroll-content">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+  <!-- QR CARD -->
+  <div id="screen-qr" class="screen">
+    <div class="status-bar transparent">
+      <span class="time">09:41</span>
+      <div><button class="nav-back" onclick="switchTab('home')">← Back</button></div>
+      <div class="status-icons"><div class="battery-icon"><div class="battery-fill"></div></div></div>
+    </div>
+    <div style="text-align:center;padding:0 20px 8px">
+      <div style="font-size:18px;font-weight:700;color:var(--text-primary)">Member Card</div>
+      <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-top:4px">Scan at gate, marina & POS</div>
+    </div>
+    <div class="qr-full-container">
+      <div class="qr-full-card">
+        <div class="qr-full-header">
+          <div class="qr-full-logo">DOSC</div>
+          <div class="qr-full-name">James Hartwell</div>
+          <div class="qr-full-id">ID: DOSC-2847</div>
+        </div>
+        <div class="qr-full-code"><!-- Rendered by JS --></div>
+        <div class="qr-full-status">
+          <span class="qr-status-dot"></span>
+          Active · Gold Tier
+        </div>
+      </div>
+      <div class="qr-refresh-text pulse">Initialising secure QR…</div>
+      <button class="qr-refresh-btn" onclick="navigate('qr',false)">↻ Refresh QR Code</button>
+    </div>
+  </div>
+
+  <!-- BOOKINGS -->
+  <div id="screen-bookings" class="screen">
+    <div class="status-bar">
+      <span class="time">09:41</span>
+      <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">Bookings & Events</div>
+      <button class="nav-action" onclick="showBookModal('New Booking','Sailing','Select date','Multiple')">+ Book</button>
+    </div>
+    <div class="tab-strip">
+      <button class="tab-btn active" data-tab="upcoming" onclick="renderBookings(this.closest('#screen-bookings'),'upcoming')">Upcoming</button>
+      <button class="tab-btn" data-tab="history" onclick="renderBookings(this.closest('#screen-bookings'),'history')">Past</button>
+      <button class="tab-btn" data-tab="waitlist" onclick="renderBookings(this.closest('#screen-bookings'),'waitlist')">Waitlist</button>
+    </div>
+    <div class="scroll-content" style="padding:0">
+      <div class="booking-list"></div>
+    </div>
+  </div>
+
+  <!-- FINANCES -->
+  <div id="screen-finances" class="screen">
+    <div class="status-bar" style="background:var(--brand-blue);color:var(--surface);border-bottom:none">
+      <span class="time" style="color:var(--surface)">09:41</span>
+      <div style="font-size:16px;font-weight:700">My Finances</div>
+      <button class="nav-action" style="color:var(--surface)" onclick="showToast('Statement downloaded')">Statement</button>
+    </div>
+    <div class="scroll-content" style="padding:0">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+  <!-- LOYALTY -->
+  <div id="screen-loyalty" class="screen">
+    <!-- Rendered content goes here, mostly reused in Finances/Profile in this mock, but let's keep placeholder -->
+    <div class="scroll-content"><!-- JS --></div>
+  </div>
+
+  <!-- PROFILE -->
+  <div id="screen-profile" class="screen">
+    <div class="status-bar">
+      <span class="time">09:41</span>
+      <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">My Profile</div>
+      <button class="nav-action" onclick="showToast('Edit mode — full build')">Edit</button>
+    </div>
+    <div class="scroll-content" style="padding:0">
+      <div class="profile-hero animate-in">
+        <div class="profile-avatar">JH</div>
+        <div class="profile-name">James Hartwell</div>
+        <div class="profile-type">⭐ Gold Member</div>
+      </div>
+      <div class="profile-section animate-in">
+        <div class="profile-section-title">Membership Details</div>
+        <div class="profile-row"><span class="profile-row-icon">🪪</span><span class="profile-row-label">Member ID</span><span class="profile-row-value">DOSC-2847</span></div>
+        <div class="profile-row"><span class="profile-row-icon">📅</span><span class="profile-row-label">Renewal Date</span><span class="profile-row-value">Dec 31, 2025</span></div>
+        <div class="profile-row"><span class="profile-row-icon">⚓</span><span class="profile-row-label">Member Type</span><span class="profile-row-value">Full Sailing</span></div>
+        <div class="profile-row"><span class="profile-row-icon">💯</span><span class="profile-row-label">Points Balance</span><span class="profile-row-value" style="color:var(--brand-blue);font-weight:700">3,842</span></div>
+      </div>
+      <div class="profile-section animate-in">
+        <div class="profile-section-title">Personal Information</div>
+        <div class="profile-row"><span class="profile-row-icon">✉️</span><span class="profile-row-label">Email</span><span class="profile-row-value">j.hartwell@…</span></div>
+        <div class="profile-row"><span class="profile-row-icon">📱</span><span class="profile-row-label">Mobile</span><span class="profile-row-value">+971 50 ****321</span></div>
+        <div class="profile-row"><span class="profile-row-icon">🚤</span><span class="profile-row-label">My Registered Boats</span><span class="profile-row-value">2 Active</span></div>
+      </div>
+      <div class="profile-section animate-in" style="margin-bottom:32px">
+        <div class="profile-section-title">Settings & App</div>
+        <div class="profile-row" onclick="showToast('Notifications enabled')"><span class="profile-row-icon">🔔</span><span class="profile-row-label">Push Notifications</span><span class="profile-row-value">On</span></div>
+        <div class="profile-row" style="cursor:pointer;" onclick="showToast('Signing out…')"><span class="profile-row-icon" style="color:var(--brand-red);filter:none;opacity:1">🚪</span><span class="profile-row-label" style="color:var(--brand-red)">Sign Out Securely</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div id="screen-notifications" class="screen">
+    <div class="status-bar">
+      <span class="time">09:41</span>
+      <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">Alerts</div>
+      <button class="nav-action" onclick="showToast('All marked as read')">Mark Read</button>
+    </div>
+    <div class="scroll-content" style="padding:0">
+      <div id="notifs-container"></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV (hidden until logged in) -->
+  <nav class="bottom-nav" style="display:none">
+    <button class="nav-item active" data-tab="home" onclick="switchTab('home')">
+      <span class="nav-item-icon">🏠</span>
+      <span class="nav-item-label">Home</span>
+    </button>
+    <button class="nav-item" data-tab="bookings" onclick="switchTab('bookings')">
+      <span class="nav-item-icon">⛵</span>
+      <span class="nav-item-label">Bookings</span>
+    </button>
+    <button class="nav-item" data-tab="qr" onclick="switchTab('qr')">
+      <span class="nav-item-icon">📱</span>
+      <span class="nav-item-label">Member ID</span>
+    </button>
+    <button class="nav-item" data-tab="finances" onclick="switchTab('finances')">
+      <span class="nav-item-icon">💳</span>
+      <span class="nav-item-label">Finances</span>
+    </button>
+    <button class="nav-item" data-tab="profile" onclick="switchTab('profile')">
+      <span class="nav-item-icon">👤</span>
+      <span class="nav-item-label">Profile</span>
+    </button>
+  </nav>
+
+  <!-- BOOKING MODAL -->
+  <div id="book-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-title">Event Name</div>
+      <div class="modal-sub">Type · Date</div>
+      <div class="modal-details"></div>
+      <div class="modal-actions">
+        <button class="btn-outline-sm" onclick="closeModal()">Cancel</button>
+        <button class="btn-solid-sm" onclick="confirmBooking()">Confirm Registration</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast"></div>
+
+</div>
+<script src="js/app.js"></script>
+</body>
+</html>
