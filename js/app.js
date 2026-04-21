@@ -33,9 +33,9 @@ let NOTIFS = [
 ];
 
 const MENU = [
-  { id: "m1", name: "Angus Beef Burger", desc: "Aged cheddar, brioche bun, club fries", price: 65, pts: 65, img: "🍔" },
-  { id: "m2", name: "Catch of the Day", desc: "Pan-seared local hamour", price: 95, pts: 95, img: "🐟" },
-  { id: "m3", name: "Club Sandwich", desc: "Roast turkey, veal bacon, egg, toasted sourdough", price: 55, pts: 55, img: "🥪" },
+  { id: "m1", name: "Margherita Pizza", desc: "Fresh mozzarella, basil, San Marzano tomato", price: 65, pts: 65, img: "🍕" },
+  { id: "m2", name: "Truffle Mushroom Risotto", desc: "Wild mushrooms, parmesan crisp", price: 95, pts: 95, img: "🍄" },
+  { id: "m3", name: "Smashed Avocado Toast", desc: "Sourdough, chilli flakes, cherry tomatoes", price: 55, pts: 55, img: "🥑" },
   { id: "m4", name: "Marina Sundowner (Pint)", desc: "Ice cold premium draught", price: 42, pts: 42, img: "🍺" },
   { id: "m5", name: "Espresso", desc: "Single origin specialty roast", price: 18, pts: 18, img: "☕" }
 ];
@@ -61,8 +61,8 @@ let TABLES = [
   { id: 5, status: "available" }, { id: 6, status: "available" }
 ];
 let KDS_TICKETS = [
-  { id: "KOT-102", table: 2, items: "2x Angus Beef Burger\n1x Sundowner Pint", time: "4m ago", status: "prep" },
-  { id: "KOT-103", table: 4, items: "1x Catch of the Day", time: "1m ago", status: "prep" }
+  { id: "KOT-102", table: 2, items: "2x Margherita Pizza\n1x Sundowner Pint", time: "4m ago", status: "prep" },
+  { id: "KOT-103", table: 4, items: "1x Truffle Mushroom Risotto", time: "1m ago", status: "prep" }
 ];
 
 
