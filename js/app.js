@@ -177,7 +177,7 @@ const renderers = {
       </div>
       <div class="section-header animate-in" style="padding-top:0"><span class="section-title">Invoices & Bills</span></div>
       <div class="animate-in" style="padding-bottom:100px;">
-        ${INVOICES.map(i => `<div class="invoice-item" onclick="${i.status==='DUE' ? `showCheckoutModal('${i.name}', ${i.amount}, '${i.id}')` : 'showToast(\\'Receipt PDF Downloading...\\')'}">
+        ${INVOICES.map(i => `<div class="invoice-item" onclick="${i.status==='DUE' ? `showCheckoutModal('${i.name}', ${i.amount}, '${i.id}')` : 'showToast(\'Receipt PDF Downloading...\')'}">
           <div class="invoice-category-icon" style="background:${i.status==='DUE'?'#FEF2F2':'#F1F5F9'}">${i.status==='DUE'?'📄':'✅'}</div>
           <div class="invoice-info">
             <div class="invoice-title">${i.name} (${i.id})</div>
