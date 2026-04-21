@@ -20,27 +20,37 @@ const MEMBER = {
 let INVOICES = [
   { id: "INV-2993", name: "Annual Membership Fee 2025", date: "01 May 2025", amount: 2400, status: "DUE" },
   { id: "INV-2994", name: "Sailing Programme - Keelboat", date: "15 Apr 2025", amount: 850, status: "DUE" },
-  { id: "INV-2841", name: "Marina Berthing (Q1)", date: "01 Jan 2025", amount: 4500, status: "PAID" }
+  { id: "INV-2841", name: "Marina Berthing (Q1)", date: "01 Jan 2025", amount: 4500, status: "PAID" },
+  { id: "INV-2501", name: "Guest Pass (J. Smith)", date: "12 Dec 2024", amount: 150, status: "PAID" },
+  { id: "INV-2400", name: "F&B POS Settlement", date: "05 Nov 2024", amount: 320, status: "PAID" }
 ];
 
 let NOTIFS = [
   { id: 1, title: 'Booking Confirmed', body: 'Your registration for IRC Championship is confirmed.', time: '2h ago', read: false },
-  { id: 2, title: 'Payment Reminder', body: 'Annual Membership fee of AED 2,400 is due.', time: '1d ago', read: false }
+  { id: 2, title: 'Payment Reminder', body: 'Annual Membership fee of AED 2,400 is due.', time: '1d ago', read: false },
+  { id: 3, title: 'Visa Expiry Warning', body: 'HR Alert: Staff WPS visa expires in 30 days.', time: '2d ago', read: true },
+  { id: 4, title: 'Gold Tier Perks', body: 'You earned 500 bonus points for renewing your Marina Berth!', time: '1w ago', read: true }
 ];
 
 const MENU = [
   { id: "m1", name: "Angus Beef Burger", desc: "Aged cheddar, brioche bun, club fries", price: 65, pts: 65, img: "🍔" },
   { id: "m2", name: "Catch of the Day", desc: "Pan-seared local hamour", price: 95, pts: 95, img: "🐟" },
-  { id: "m4", name: "Marina Sundowner (Pint)", desc: "Ice cold premium draught", price: 42, pts: 42, img: "🍺" }
+  { id: "m3", name: "Club Sandwich", desc: "Roast turkey, veal bacon, egg, toasted sourdough", price: 55, pts: 55, img: "🥪" },
+  { id: "m4", name: "Marina Sundowner (Pint)", desc: "Ice cold premium draught", price: 42, pts: 42, img: "🍺" },
+  { id: "m5", name: "Espresso", desc: "Single origin specialty roast", price: 18, pts: 18, img: "☕" }
 ];
 
 let EVENTS = [
   { id: "e1", name: "Dubai IRC Championship", date: "May 12-14", type: "regatta", icon: "⛵", slots: "Confirmed" },
-  { id: "e2", name: "Keelboat Level 2", date: "Friday, May 3", type: "lesson", icon: "🎓", slots: "Waitlist" }
+  { id: "e2", name: "Keelboat Level 2", date: "Friday, May 3", type: "lesson", icon: "🎓", slots: "Waitlist" },
+  { id: "e3", name: "Members' Sundowner", date: "Friday, May 10", type: "social", icon: "🍻", slots: "Confirmed" },
+  { id: "e4", name: "Youth Sailing Tryout", date: "Saturday, May 18", type: "lesson", icon: "👦", slots: "Confirmed" }
 ];
 
 let ACTIVITIES = [
-  { id: "a1", title: "F&B: The Terrace", time: "Today, 14:30", type: "fb", icon: "🍽️", amount: -185, due: false }
+  { id: "a1", title: "F&B: The Terrace", time: "Today, 14:30", type: "fb", icon: "🍽️", amount: -185, due: false },
+  { id: "a2", title: "Loyalty Earned (+185)", time: "Today, 14:30", type: "event", icon: "⭐", amount: 0, due: false },
+  { id: "a3", title: "Marina Berth Renewal", time: "Jan 1, 2025", type: "finance", icon: "💳", amount: -4500, due: false }
 ];
 
 // STAFF DATA
