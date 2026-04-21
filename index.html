@@ -8,19 +8,19 @@
 <meta name="apple-mobile-web-app-title" content="DOSC">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#F7F9FA">
-<meta name="description" content="Dubai Offshore Sailing Club — Member Portal">
-<title>DOSC Member App</title>
+<meta name="description" content="Dubai Offshore Sailing Club — Enterprise Mock Portal">
+<title>DOSC App Complete</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="stylesheet" href="css/app.css">
 </head>
-<body>
+<body class="mode-member">
 <div id="app">
 
   <!-- SPLASH -->
   <div id="screen-splash" class="screen">
     <div class="splash-logo-ring"><div class="splash-logo-inner">⚓</div></div>
-    <div class="splash-title">DOSC</div>
+    <div class="splash-title" id="splash-title-text">DOSC</div>
     <div class="splash-sub">Dubai Offshore Sailing Club</div>
     <div class="splash-loader"><div class="splash-loader-bar"></div></div>
   </div>
@@ -29,11 +29,11 @@
   <div id="screen-login" class="screen">
     <div class="login-hero">
       <div class="login-hero-icon">🛥️</div>
-      <div class="login-hero-text">Member Portal</div>
+      <div class="login-hero-text">Enterprise Portal</div>
     </div>
     <div class="login-body">
       <h2 class="login-greeting">Welcome Back</h2>
-      <p class="login-sub">Sign in to your DOSC membership account</p>
+      <p class="login-sub">Sign in to DOSC</p>
       <div class="form-group">
         <label class="form-label" for="login-email">Email Address</label>
         <input class="form-input" id="login-email" type="email" placeholder="james.hartwell@email.com" value="james.hartwell@email.com">
@@ -42,7 +42,7 @@
         <label class="form-label" for="login-pass">Password</label>
         <input class="form-input" id="login-pass" type="password" placeholder="••••••••" value="password">
       </div>
-      <button class="btn-primary" onclick="loginSubmit()">Sign In to DOSC</button>
+      <button class="btn-primary" onclick="loginSubmit()">Secure Sign In</button>
       <div class="login-divider">or</div>
       <button class="btn-biometric" onclick="biometricLogin()">
         <svg style="width:20px;height:20px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9v2c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V9c0-3.87-3.13-7-7-7z"/><path d="M12 13v9M9 19h6M7 9c0 2.76 2.24 5 5 5s5-2.24 5-5"/></svg>
@@ -51,7 +51,10 @@
     </div>
   </div>
 
-  <!-- HOME -->
+  <!-- =============================== -->
+  <!--        MEMBER MODULES           -->
+  <!-- =============================== -->
+
   <div id="screen-home" class="screen">
     <div class="status-bar transparent" style="z-index: 50;">
       <span class="time">09:41</span>
@@ -63,12 +66,9 @@
         </div>
       </div>
     </div>
-    <div class="scroll-content">
-      <!-- Rendered by JS -->
-    </div>
+    <div class="scroll-content"></div>
   </div>
 
-  <!-- QR CARD -->
   <div id="screen-qr" class="screen">
     <div class="status-bar transparent">
       <span class="time" style="color:white">09:41</span>
@@ -79,75 +79,106 @@
       <div class="qr-full-card">
         <div class="qr-full-header">
           <div class="qr-full-logo">DOSC</div>
-          <div class="qr-full-name" id="qr-name">James Hartwell</div>
-          <div class="qr-full-id" id="qr-id">ID: DOSC-2847</div>
+          <div class="qr-full-name" id="qr-name">Loading...</div>
+          <div class="qr-full-id" id="qr-id">ID: ...</div>
         </div>
         <div class="qr-full-code">▣ QR CODE ▣</div>
-        <div class="qr-full-status">
-          <span class="qr-status-dot"></span>
-          Active · Gold Tier
-        </div>
+        <div class="qr-full-status"><span class="qr-status-dot"></span> Active · Gold Tier</div>
       </div>
       <button class="qr-refresh-btn" onclick="navigate('qr',false)">↻ Refresh Identity</button>
     </div>
   </div>
 
-  <!-- BOOKINGS -->
   <div id="screen-bookings" class="screen">
     <div class="status-bar">
       <span class="time">09:41</span>
       <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">Bookings & Events</div>
-      <button class="nav-action" onclick="showToast('Filter options coming soon')">Filter</button>
+      <button class="nav-action" onclick="showToast('Event Filters active')">Filter</button>
     </div>
     <div class="tab-strip">
       <button class="tab-btn active" data-tab="upcoming" onclick="renderBookings(this.closest('#screen-bookings'),'upcoming')">Upcoming</button>
       <button class="tab-btn" data-tab="history" onclick="renderBookings(this.closest('#screen-bookings'),'history')">History</button>
     </div>
-    <div class="scroll-content" style="padding:0">
-      <div class="booking-list"></div>
-    </div>
+    <div class="scroll-content" style="padding:0"><div class="booking-list"></div></div>
   </div>
 
-  <!-- DINING / F&B -->
   <div id="screen-dining" class="screen">
     <div class="status-bar">
       <span class="time">09:41</span>
-      <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">Club Dining (POS)</div>
-      <div style="font-size:13px;font-weight:700;color:var(--brand-red)" id="dining-points-badge">3,842 Pts</div>
+      <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">Club Dining</div>
+      <div style="font-size:13px;font-weight:700;color:var(--brand-red)" id="dining-points-badge">---</div>
     </div>
     <div class="scroll-content" style="padding:0">
-      <div style="padding: 20px 20px 0; font-size:14px; color:var(--text-secondary); font-weight:500;">Order from your table or pick up at the bar. Points earned automatically!</div>
-      <!-- Rendered by JS -->
+      <div style="padding: 20px 20px 0; font-size:14px; color:var(--text-secondary); font-weight:500;">Order from table. Instantly transmits to KDS!</div>
       <div id="dining-menu"></div>
     </div>
   </div>
 
-  <!-- FINANCES -->
   <div id="screen-finances" class="screen">
     <div class="status-bar" style="background:var(--brand-blue);color:var(--surface);border-bottom:none">
       <span class="time" style="color:var(--surface)">09:41</span>
-      <div style="font-size:16px;font-weight:700">ERP & Finances</div>
-      <button class="nav-action" style="color:var(--surface)" onclick="showToast('Statement downloaded as PDF')">Statement</button>
+      <div style="font-size:16px;font-weight:700">ERP Finances</div>
+      <button class="nav-action" style="color:var(--surface)" onclick="generatePDFStatement()">Statement</button>
     </div>
-    <div class="scroll-content" style="padding:0">
-      <!-- Rendered by JS -->
-    </div>
+    <div class="scroll-content" style="padding:0"></div>
   </div>
 
-  <!-- PROFILE -->
   <div id="screen-profile" class="screen">
     <div class="status-bar">
       <span class="time">09:41</span>
       <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">My Profile</div>
-      <button class="nav-action" onclick="showToast('Edit mode locked')">Edit</button>
+      <button class="nav-action" onclick="showEditProfileModal()">Edit</button>
     </div>
-    <div class="scroll-content" style="padding:0">
-      <!-- Rendered by JS -->
-    </div>
+    <div class="scroll-content" style="padding:0"></div>
   </div>
 
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav" style="display:none">
+
+  <!-- =============================== -->
+  <!--        STAFF MODULES            -->
+  <!-- =============================== -->
+
+  <div id="screen-staff-kpi" class="screen staff-ui">
+    <div class="status-bar" style="background:#0F172A;color:white;">
+      <span class="time">09:41</span>
+      <div style="font-size:16px;font-weight:700">Exec Analytics</div>
+      <div style="font-size:12px;color:#A78BFA">ERP Sync</div>
+    </div>
+    <div class="scroll-content" style="padding:0"></div>
+  </div>
+
+  <div id="screen-staff-pos" class="screen staff-ui">
+    <div class="status-bar" style="background:#0F172A;color:white;">
+      <span class="time">09:41</span>
+      <div style="font-size:16px;font-weight:700">Waiter POS</div>
+      <div style="font-size:12px;color:#34D399">Tbl View</div>
+    </div>
+    <div class="scroll-content" style="padding:0"></div>
+  </div>
+
+  <div id="screen-staff-kds" class="screen staff-ui">
+    <div class="status-bar" style="background:#0F172A;color:white;">
+      <span class="time">09:41</span>
+      <div style="font-size:16px;font-weight:700">Kitchen KDS</div>
+      <div style="font-size:12px;color:#FCA5A5">Live Orders</div>
+    </div>
+    <div class="scroll-content" style="padding:0; background:#1E293B"></div>
+  </div>
+
+  <div id="screen-staff-gate" class="screen staff-ui">
+    <div class="status-bar" style="background:#0F172A;color:white;">
+      <span class="time">09:41</span>
+      <div style="font-size:16px;font-weight:700">Gate / HR</div>
+      <div style="font-size:12px;color:#93C5FD">Scanner</div>
+    </div>
+    <div class="scroll-content" style="padding:0"></div>
+  </div>
+
+
+  <!-- =============================== -->
+  <!--        NAVIGATION BARS          -->
+  <!-- =============================== -->
+
+  <nav class="bottom-nav member-nav" id="member-bottom-nav" style="display:none">
     <button class="nav-item active" data-tab="home" onclick="switchTab('home')">
       <span class="nav-item-icon">🏠</span><span class="nav-item-label">Home</span>
     </button>
@@ -168,12 +199,35 @@
     </button>
   </nav>
 
+  <nav class="bottom-nav staff-nav" id="staff-bottom-nav" style="display:none; background:#0F172A; border-color:#1E293B;">
+    <button class="nav-item active" data-tab="staff-kpi" onclick="switchTab('staff-kpi')">
+      <span class="nav-item-icon">📊</span><span class="nav-item-label" style="color:#94A3B8">Manager</span>
+    </button>
+    <button class="nav-item" data-tab="staff-pos" onclick="switchTab('staff-pos')">
+      <span class="nav-item-icon">🍽️</span><span class="nav-item-label" style="color:#94A3B8">POS</span>
+    </button>
+    <button class="nav-item" data-tab="staff-kds" onclick="switchTab('staff-kds')">
+      <span class="nav-item-icon">🔥</span><span class="nav-item-label" style="color:#94A3B8">Kitchen</span>
+    </button>
+    <button class="nav-item" data-tab="staff-gate" onclick="switchTab('staff-gate')">
+      <span class="nav-item-icon">🔐</span><span class="nav-item-label" style="color:#94A3B8">Gate</span>
+    </button>
+  </nav>
+
+
   <!-- MODALS -->
   <div id="global-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <div id="modal-content"></div>
     </div>
+  </div>
+
+  <div id="pdf-viewer" class="modal-overlay" style="align-items:center;">
+    <div id="pdf-content" style="background:white; width:90%; height:80%; border-radius:12px; overflow-y:auto; padding:20px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+       Loading Secure Document...
+    </div>
+    <button style="position:absolute; bottom:4dvh; left:50%; transform:translateX(-50%); background:black; color:white; border:none; padding:12px 24px; border-radius:30px; font-weight:700;" onclick="document.getElementById('pdf-viewer').classList.remove('show')">Close Document</button>
   </div>
 
   <!-- TOAST -->
