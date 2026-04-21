@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="DOSC">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#F0F2F6">
+<meta name="theme-color" content="#F7F9FA">
 <meta name="description" content="Dubai Offshore Sailing Club — Member Portal">
 <title>DOSC Member App</title>
 <link rel="manifest" href="manifest.json">
@@ -42,7 +42,6 @@
         <label class="form-label" for="login-pass">Password</label>
         <input class="form-input" id="login-pass" type="password" placeholder="••••••••" value="password">
       </div>
-      <div style="text-align:right;margin-bottom:24px"><button style="background:none;border:none;color:var(--brand-blue);font-size:13px;font-weight:600;cursor:pointer;">Forgot password?</button></div>
       <button class="btn-primary" onclick="loginSubmit()">Sign In to DOSC</button>
       <div class="login-divider">or</div>
       <button class="btn-biometric" onclick="biometricLogin()">
@@ -54,12 +53,14 @@
 
   <!-- HOME -->
   <div id="screen-home" class="screen">
-    <div class="status-bar transparent">
+    <div class="status-bar transparent" style="z-index: 50;">
       <span class="time">09:41</span>
       <div class="nav-logo" style="font-weight:800;color:var(--brand-blue);font-size:16px;">DOSC</div>
       <div class="status-icons">
-        <svg width="18" height="12" viewBox="0 0 16 12" fill="var(--text-primary)"><rect x="0" y="4" width="3" height="8" rx="1"/><rect x="4.5" y="2.5" width="3" height="9.5" rx="1"/><rect x="9" y="0.5" width="3" height="11.5" rx="1"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" opacity="0.3"/></svg>
-        <div class="battery-icon"><div class="battery-fill"></div></div>
+        <div class="bell-wrap" onclick="toggleNotifications()">
+          🔔<div class="bell-badge" id="bell-badge"></div>
+          <div id="notification-tray" class="notification-tray"></div>
+        </div>
       </div>
     </div>
     <div class="scroll-content">
@@ -70,29 +71,24 @@
   <!-- QR CARD -->
   <div id="screen-qr" class="screen">
     <div class="status-bar transparent">
-      <span class="time">09:41</span>
-      <div><button class="nav-back" onclick="switchTab('home')">← Back</button></div>
-      <div class="status-icons"><div class="battery-icon"><div class="battery-fill"></div></div></div>
-    </div>
-    <div style="text-align:center;padding:0 20px 8px">
-      <div style="font-size:18px;font-weight:700;color:var(--text-primary)">Member Card</div>
-      <div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin-top:4px">Scan at gate, marina & POS</div>
+      <span class="time" style="color:white">09:41</span>
+      <div><button class="nav-back" style="color:white" onclick="switchTab('home')">← Home</button></div>
+      <div class="status-icons"><button style="background:rgba(255,255,255,0.2);border:none;color:white;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:700" onclick="showGuestModal()">+ Guest Pass</button></div>
     </div>
     <div class="qr-full-container">
       <div class="qr-full-card">
         <div class="qr-full-header">
           <div class="qr-full-logo">DOSC</div>
-          <div class="qr-full-name">James Hartwell</div>
-          <div class="qr-full-id">ID: DOSC-2847</div>
+          <div class="qr-full-name" id="qr-name">James Hartwell</div>
+          <div class="qr-full-id" id="qr-id">ID: DOSC-2847</div>
         </div>
-        <div class="qr-full-code"><!-- Rendered by JS --></div>
+        <div class="qr-full-code">▣ QR CODE ▣</div>
         <div class="qr-full-status">
           <span class="qr-status-dot"></span>
           Active · Gold Tier
         </div>
       </div>
-      <div class="qr-refresh-text pulse">Initialising secure QR…</div>
-      <button class="qr-refresh-btn" onclick="navigate('qr',false)">↻ Refresh QR Code</button>
+      <button class="qr-refresh-btn" onclick="navigate('qr',false)">↻ Refresh Identity</button>
     </div>
   </div>
 
@@ -101,15 +97,28 @@
     <div class="status-bar">
       <span class="time">09:41</span>
       <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">Bookings & Events</div>
-      <button class="nav-action" onclick="showBookModal('New Booking','Sailing','Select date','Multiple')">+ Book</button>
+      <button class="nav-action" onclick="showToast('Filter options coming soon')">Filter</button>
     </div>
     <div class="tab-strip">
       <button class="tab-btn active" data-tab="upcoming" onclick="renderBookings(this.closest('#screen-bookings'),'upcoming')">Upcoming</button>
-      <button class="tab-btn" data-tab="history" onclick="renderBookings(this.closest('#screen-bookings'),'history')">Past</button>
-      <button class="tab-btn" data-tab="waitlist" onclick="renderBookings(this.closest('#screen-bookings'),'waitlist')">Waitlist</button>
+      <button class="tab-btn" data-tab="history" onclick="renderBookings(this.closest('#screen-bookings'),'history')">History</button>
     </div>
     <div class="scroll-content" style="padding:0">
       <div class="booking-list"></div>
+    </div>
+  </div>
+
+  <!-- DINING / F&B -->
+  <div id="screen-dining" class="screen">
+    <div class="status-bar">
+      <span class="time">09:41</span>
+      <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">Club Dining (POS)</div>
+      <div style="font-size:13px;font-weight:700;color:var(--brand-red)" id="dining-points-badge">3,842 Pts</div>
+    </div>
+    <div class="scroll-content" style="padding:0">
+      <div style="padding: 20px 20px 0; font-size:14px; color:var(--text-secondary); font-weight:500;">Order from your table or pick up at the bar. Points earned automatically!</div>
+      <!-- Rendered by JS -->
+      <div id="dining-menu"></div>
     </div>
   </div>
 
@@ -117,18 +126,12 @@
   <div id="screen-finances" class="screen">
     <div class="status-bar" style="background:var(--brand-blue);color:var(--surface);border-bottom:none">
       <span class="time" style="color:var(--surface)">09:41</span>
-      <div style="font-size:16px;font-weight:700">My Finances</div>
-      <button class="nav-action" style="color:var(--surface)" onclick="showToast('Statement downloaded')">Statement</button>
+      <div style="font-size:16px;font-weight:700">ERP & Finances</div>
+      <button class="nav-action" style="color:var(--surface)" onclick="showToast('Statement downloaded as PDF')">Statement</button>
     </div>
     <div class="scroll-content" style="padding:0">
       <!-- Rendered by JS -->
     </div>
-  </div>
-
-  <!-- LOYALTY -->
-  <div id="screen-loyalty" class="screen">
-    <!-- Rendered content goes here, mostly reused in Finances/Profile in this mock, but let's keep placeholder -->
-    <div class="scroll-content"><!-- JS --></div>
   </div>
 
   <!-- PROFILE -->
@@ -136,82 +139,40 @@
     <div class="status-bar">
       <span class="time">09:41</span>
       <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">My Profile</div>
-      <button class="nav-action" onclick="showToast('Edit mode — full build')">Edit</button>
+      <button class="nav-action" onclick="showToast('Edit mode locked')">Edit</button>
     </div>
     <div class="scroll-content" style="padding:0">
-      <div class="profile-hero animate-in">
-        <div class="profile-avatar">JH</div>
-        <div class="profile-name">James Hartwell</div>
-        <div class="profile-type">⭐ Gold Member</div>
-      </div>
-      <div class="profile-section animate-in">
-        <div class="profile-section-title">Membership Details</div>
-        <div class="profile-row"><span class="profile-row-icon">🪪</span><span class="profile-row-label">Member ID</span><span class="profile-row-value">DOSC-2847</span></div>
-        <div class="profile-row"><span class="profile-row-icon">📅</span><span class="profile-row-label">Renewal Date</span><span class="profile-row-value">Dec 31, 2025</span></div>
-        <div class="profile-row"><span class="profile-row-icon">⚓</span><span class="profile-row-label">Member Type</span><span class="profile-row-value">Full Sailing</span></div>
-        <div class="profile-row"><span class="profile-row-icon">💯</span><span class="profile-row-label">Points Balance</span><span class="profile-row-value" style="color:var(--brand-blue);font-weight:700">3,842</span></div>
-      </div>
-      <div class="profile-section animate-in">
-        <div class="profile-section-title">Personal Information</div>
-        <div class="profile-row"><span class="profile-row-icon">✉️</span><span class="profile-row-label">Email</span><span class="profile-row-value">j.hartwell@…</span></div>
-        <div class="profile-row"><span class="profile-row-icon">📱</span><span class="profile-row-label">Mobile</span><span class="profile-row-value">+971 50 ****321</span></div>
-        <div class="profile-row"><span class="profile-row-icon">🚤</span><span class="profile-row-label">My Registered Boats</span><span class="profile-row-value">2 Active</span></div>
-      </div>
-      <div class="profile-section animate-in" style="margin-bottom:32px">
-        <div class="profile-section-title">Settings & App</div>
-        <div class="profile-row" onclick="showToast('Notifications enabled')"><span class="profile-row-icon">🔔</span><span class="profile-row-label">Push Notifications</span><span class="profile-row-value">On</span></div>
-        <div class="profile-row" style="cursor:pointer;" onclick="showToast('Signing out…')"><span class="profile-row-icon" style="color:var(--brand-red);filter:none;opacity:1">🚪</span><span class="profile-row-label" style="color:var(--brand-red)">Sign Out Securely</span></div>
-      </div>
+      <!-- Rendered by JS -->
     </div>
   </div>
 
-  <!-- NOTIFICATIONS -->
-  <div id="screen-notifications" class="screen">
-    <div class="status-bar">
-      <span class="time">09:41</span>
-      <div style="font-size:16px;font-weight:700;color:var(--brand-blue)">Alerts</div>
-      <button class="nav-action" onclick="showToast('All marked as read')">Mark Read</button>
-    </div>
-    <div class="scroll-content" style="padding:0">
-      <div id="notifs-container"></div>
-    </div>
-  </div>
-
-  <!-- BOTTOM NAV (hidden until logged in) -->
+  <!-- BOTTOM NAV -->
   <nav class="bottom-nav" style="display:none">
     <button class="nav-item active" data-tab="home" onclick="switchTab('home')">
-      <span class="nav-item-icon">🏠</span>
-      <span class="nav-item-label">Home</span>
+      <span class="nav-item-icon">🏠</span><span class="nav-item-label">Home</span>
     </button>
     <button class="nav-item" data-tab="bookings" onclick="switchTab('bookings')">
-      <span class="nav-item-icon">⛵</span>
-      <span class="nav-item-label">Bookings</span>
+      <span class="nav-item-icon">⛵</span><span class="nav-item-label">Sailing</span>
     </button>
     <button class="nav-item" data-tab="qr" onclick="switchTab('qr')">
-      <span class="nav-item-icon">📱</span>
-      <span class="nav-item-label">Member ID</span>
+      <span class="nav-item-icon">📱</span><span class="nav-item-label">ID Pass</span>
+    </button>
+    <button class="nav-item" data-tab="dining" onclick="switchTab('dining')">
+      <span class="nav-item-icon">🍔</span><span class="nav-item-label">Dining</span>
     </button>
     <button class="nav-item" data-tab="finances" onclick="switchTab('finances')">
-      <span class="nav-item-icon">💳</span>
-      <span class="nav-item-label">Finances</span>
+      <span class="nav-item-icon">💳</span><span class="nav-item-label">Finances</span>
     </button>
     <button class="nav-item" data-tab="profile" onclick="switchTab('profile')">
-      <span class="nav-item-icon">👤</span>
-      <span class="nav-item-label">Profile</span>
+      <span class="nav-item-icon">👤</span><span class="nav-item-label">Profile</span>
     </button>
   </nav>
 
-  <!-- BOOKING MODAL -->
-  <div id="book-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <!-- MODALS -->
+  <div id="global-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
-      <div class="modal-title">Event Name</div>
-      <div class="modal-sub">Type · Date</div>
-      <div class="modal-details"></div>
-      <div class="modal-actions">
-        <button class="btn-outline-sm" onclick="closeModal()">Cancel</button>
-        <button class="btn-solid-sm" onclick="confirmBooking()">Confirm Registration</button>
-      </div>
+      <div id="modal-content"></div>
     </div>
   </div>
 
